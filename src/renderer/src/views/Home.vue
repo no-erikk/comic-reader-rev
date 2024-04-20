@@ -1,6 +1,8 @@
 <template>
   <main class="home-page">
-    <div class="libraryGrid grid grid-cols-5 flex-wrap justify-items-center gap-4">
+    <div
+      class="libraryGrid grid grid-cols-5 flex-wrap justify-items-center gap-4"
+    >
       <div
         v-for="dir in directories"
         :key="dir.id"
@@ -14,9 +16,9 @@
 </template>
 
 <script setup>
-const testFolders = []
+const testFolders = [];
 for (let i = 0; i < 50; i++) {
-  testFolders.push('Folder ' + i)
+  testFolders.push("Folder " + i);
 }
 </script>
 

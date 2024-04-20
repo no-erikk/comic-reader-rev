@@ -20,17 +20,17 @@
 </template>
 
 <script>
-import homeIcon from '../assets/home.svg'
-import settingsIcon from '../assets/settings.svg'
+import homeIcon from "../assets/home.svg";
+import settingsIcon from "../assets/settings.svg";
 
 export default {
   data() {
     return {
       homeIcon,
-      settingsIcon
-    }
-  }
-}
+      settingsIcon,
+    };
+  },
+};
 </script>
 
 <style scoped>
