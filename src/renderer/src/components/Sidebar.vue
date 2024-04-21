@@ -1,22 +1,29 @@
 <template>
-  <aside>
+  <div class="flex flex-col overflow-hidden h-full p-2 bg-popPink">
+    <!-- logo TEMP -->
     <div class="logo">
       <img src="../assets/electron.svg" alt="Electron" />
     </div>
     <h3>Menu</h3>
     <div class="menu">
-      <router-link class="button" to="/">
-        <span class="navbuttons">
-          <img :src="homeIcon" alt="home icon" />
-        </span>
-      </router-link>
-      <router-link class="button" to="/settings">
-        <span class="navbuttons">
-          <img :src="settingsIcon" alt="home icon" />
-        </span>
-      </router-link>
+      <!-- home/library -->
+      <nav class="hover:bg-secondary rounded-md">
+        <router-link class="button" to="/">
+          <span class="navbuttons">
+            <img :src="homeIcon" alt="home icon" />
+          </span>
+        </router-link>
+      </nav>
+      <!-- settings  -->
+      <nav class="hover:bg-secondary rounded-md">
+        <router-link class="button" to="/settings">
+          <span class="navbuttons">
+            <img :src="settingsIcon" alt="home icon" />
+          </span>
+        </router-link>
+      </nav>
     </div>
-  </aside>
+  </div>
 </template>
 
 <script>
@@ -33,7 +40,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<!-- <style scoped>
 aside {
   position: fixed;
   display: flex;
@@ -60,4 +67,4 @@ aside {
     z-index: 99;
   }
 }
-</style>
+</style> -->

@@ -13,11 +13,12 @@ const readDir = async () => {
 
 <template>
   <main class="settings-page">
-    <div class="selector col-span-2 justify-self-center text-center">
-      <h1>Select Library Folder:</h1>
-      <button id="btn" type="button" @click="readDir">Choose file</button>
-      <br />
-      <h2>{{ filePath }}</h2>
+    <div class="selector p-3">
+      <h1 class="text-lg text-popGrey">Select Library Folder</h1>
+      <button id="btn" type="button" class="text-popGrey mr-3" @click="readDir">
+        Choose file
+      </button>
+      <h2 class="inline text-popGrey">Selected Folder: {{ filePath }}</h2>
     </div>
   </main>
 </template>
