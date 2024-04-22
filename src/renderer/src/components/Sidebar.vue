@@ -1,11 +1,7 @@
 <template>
-  <div class="flex flex-col overflow-hidden h-full p-2 bg-popPink">
+  <div class="flex flex-col overflow-hidden h-full p-1 bg-popPink">
     <!-- logo TEMP -->
-    <div class="logo">
-      <img src="../assets/electron.svg" alt="Electron" />
-    </div>
-    <h3>Menu</h3>
-    <div class="menu">
+    <div class="menu mt-6">
       <!-- home/library -->
       <nav class="hover:bg-secondary rounded-md">
         <router-link class="button" to="/">
@@ -39,32 +35,3 @@ export default {
   },
 };
 </script>
-
-<!-- <style scoped>
-aside {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: calc(2rem + 32px);
-  height: 100vh;
-  overflow: hidden;
-  padding: 1rem;
-
-  background-color: gray;
-
-  transition: 0.2s ease-out;
-
-  .logo {
-    margin-bottom: 1rem;
-
-    img {
-      width: 2rem;
-    }
-  }
-
-  @media (max-width: 768px) {
-    position: fixed;
-    z-index: 99;
-  }
-}
-</style> -->

@@ -9,17 +9,17 @@ export const useStore = defineStore({
       home: {
         title: "Library",
         icon: "home",
-        iconPath: "../assets/home.svg",
+        iconPath: "../assets/home.svg", // todo
       },
       settings: {
         title: "Settings",
         icon: "settings",
-        iconPath: "../assets/settings.svg",
+        iconPath: "../assets/settings.svg", // todo
       },
     },
     settings: {
-      databasePath: "db.json",
-      currentLibraryPath: "",
+      databasePath: "src/db.json",
+      currentLibraryPath: "", // todo
     },
   }),
   actions: {
@@ -30,13 +30,13 @@ export const useStore = defineStore({
   },
   getters: {
     getActivePage() {
-      console.log("from store:", this.activePage);
+      //console.log("from store:", this.activePage);
       return this.activePage;
     },
     getPageMeta() {
-      console.log("arg from store:", this.activePage);
+      //console.log("arg from store:", this.activePage);
       const selectedMeta = this.pageMetadata[this.activePage] || {};
-      console.log("selected meta:", selectedMeta);
+      //console.log("selected meta:", selectedMeta);
       return selectedMeta;
     },
   },

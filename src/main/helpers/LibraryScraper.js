@@ -2,12 +2,14 @@ import Database from "better-sqlite3";
 import { dialog } from "electron";
 import path from "path";
 const readdrip = require("readdirp");
-const fs = require("fs");
+//const fs = require("fs");
+
+//
 
 // check for database file
 const dbPath = "db.json";
 let db;
-if (!fs.existsSync(dbPath)) {
+/* if (!fs.existsSync(dbPath)) {
   // if not found initialize new database
   db = new Database(dbPath);
   //db.pragma('journal_mode = WAL')
@@ -24,13 +26,15 @@ if (!fs.existsSync(dbPath)) {
     CREATE TABLE IF NOT EXISTS files (
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
+        read BOOLEAN,
+        new BOOLEAN,
         directory_id INTEGER NOT NULL,
         FOREIGN KEY (directory_id) REFERENCES directories(id)
     )
   `);
-
+  db.close();
   console.log("no database found, created new database");
-}
+} */
 
 // scan file paths and return directories
 export async function ReadDirectories() {

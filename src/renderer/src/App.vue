@@ -6,7 +6,7 @@ import Sidebar from "./components/Sidebar.vue";
 <template>
   <div class="app flex h-screen">
     <!-- sidebar -->
-    <div class="sidebar-container w-3rem">
+    <div class="sidebar-container w-10">
       <Sidebar />
     </div>
     <!-- main content window -->
