@@ -2,7 +2,12 @@ import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 
 // Custom APIs for renderer
-const api = {};
+const storageApi = {
+  selectDirectory: () => ipcRenderer.invoke("selectDirectory"),
+  readLibraryFolders: () => ipcRenderer.invoke("readLibraryFolders"),
+  readLibraryFiles: (selectedFolderPath) =>
+    ipcRenderer.invoke("readLibraryFiles", selectedFolderPath),
+};
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
@@ -10,17 +15,11 @@ const api = {};
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
-    contextBridge.exposeInMainWorld("api", api);
-    contextBridge.exposeInMainWorld("fileApi", {
-      readFileDirectory: () => ipcRenderer.invoke("dialog:openFile"),
-    });
+    contextBridge.exposeInMainWorld("storageApi", storageApi);
   } catch (error) {
     console.error(error);
   }
 } else {
   window.electron = electronAPI;
   window.api = api;
-  window.fileApi = {
-    readFileDirectory: () => ipcRenderer.invoke("dialog:openFile"),
-  };
 }

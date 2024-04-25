@@ -4,7 +4,7 @@ import { ref } from "vue";
 const filePath = ref(null);
 const readDir = async () => {
   try {
-    filePath.value = await fileApi.readFileDirectory();
+    filePath.value = await storageApi.selectDirectory();
   } catch (error) {
     console.log(error);
   }

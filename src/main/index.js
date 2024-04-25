@@ -2,7 +2,11 @@ import { app, shell, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
-import { ReadDirectories } from "./helpers/LibraryScraper";
+import {
+  readLibraryFiles,
+  readLibraryFolders,
+  selectDirectory,
+} from "./helpers/database";
 
 function createWindow() {
   // Create the browser window.
@@ -14,8 +18,9 @@ function createWindow() {
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
-      nodeIntegration: true, // the scope of this app is limited enough where this is a non-issue
+      nodeIntegration: false, // the scope of this app is limited enough where this is a non-issue
       sandbox: false,
+      contextIsolation: true,
     },
   });
 
@@ -76,4 +81,32 @@ app.on("window-all-closed", () => {
 // code. You can also put them in separate files and require them here.
 
 // Listen for the message from the renderer process to open file dialog and read directories
-ipcMain.handle("dialog:openFile", ReadDirectories);
+ipcMain.handle("selectDirectory", selectDirectory);
+
+/* ipcMain.handle("readFolder", (event, folderPath) => {
+  try {
+    const folderData = readFolder(folderPath);
+    return folderData;
+  } catch (error) {
+    return [];
+  }
+}); */
+ipcMain.handle("readLibraryFolders", async () => {
+  try {
+    const folders = await readLibraryFolders();
+    return folders;
+  } catch (error) {
+    console.error("Error getting folder data:", error);
+    return null;
+  }
+});
+
+ipcMain.handle("readLibraryFiles", async (_, selectedFolderPath) => {
+  try {
+    const files = await readLibraryFiles(selectedFolderPath);
+    return files;
+  } catch (error) {
+    console.error("Error getting file data:", error);
+    return null;
+  }
+});
