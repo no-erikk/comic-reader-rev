@@ -1,5 +1,5 @@
 <script setup>
-import { useStore } from "../stores/rendererStore";
+import { useStore } from "../stores/store";
 
 const store = useStore();
 const folderPath = store.getLibraryDirectory;

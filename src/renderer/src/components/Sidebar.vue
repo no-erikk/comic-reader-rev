@@ -29,7 +29,7 @@
 import backIcon from "../assets/backarrow.svg";
 import homeIcon from "../assets/home.svg";
 import settingsIcon from "../assets/settings.svg";
-import { useStore } from "../stores/rendererStore";
+import { useStore } from "../stores/store";
 
 const store = useStore();
 

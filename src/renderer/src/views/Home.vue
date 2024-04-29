@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useStore } from "../stores/rendererStore";
+import { useStore } from "../stores/store";
 
 const store = useStore();
 const folders = ref(null);
