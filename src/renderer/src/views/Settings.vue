@@ -1,8 +1,9 @@
 <script setup>
+import { computed } from "vue";
 import { useStore } from "../stores/store";
 
 const store = useStore();
-const folderPath = store.getLibraryDirectory;
+const folderPath = computed(() => store.getLibraryDirectory);
 
 const readDir = async () => {
   try {
@@ -12,6 +13,12 @@ const readDir = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const resetDir = () => {
+  store.clearLibraryInformation();
+  // call func to delete library.json
+  storageApi.deleteLibraryFile();
 };
 </script>
 
@@ -27,7 +34,18 @@ const readDir = async () => {
       >
         Choose file
       </button>
-      <h2 class="inline text-popGrey">Selected Folder: {{ folderPath }}</h2>
+      <h2 class="inline text-popGrey">
+        Selected Folder: <b>{{ folderPath }}</b>
+      </h2>
+      <br />
+      <button
+        id="libResetBtn"
+        type="button"
+        class="bg-popPink rounded-md text-primary text-sm font-semibold pl-1 pr-1 mr-3"
+        @click="resetDir"
+      >
+        Clear Directory
+      </button>
     </div>
   </main>
 </template>

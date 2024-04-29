@@ -1,3 +1,4 @@
+import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -17,13 +18,20 @@ export const useStore = defineStore({
         iconPath: "../assets/settings.svg", // todo
       },
     },
-    viewMode: "",
+    viewMode: ref(""),
     settings: {
-      databasePath: "src/db.json",
-      currentLibraryPath: "", // todo
+      databasePath: "src/db.json", // todo
+      currentLibraryPath: ref(""),
     },
   }),
   actions: {
+    loadLibraryData() {
+      const savedLibraryPath = useLocalStorage(
+        "libraryPath",
+        this.settings.currentLibraryPath,
+      );
+      this.settings.currentLibraryPath = savedLibraryPath.value;
+    },
     setActivePage(page) {
       this.activePage = page;
       return this.activePage;
@@ -31,17 +39,26 @@ export const useStore = defineStore({
     setViewMode(viewName) {
       this.viewMode = viewName;
     },
+    setLibraryDirectory(libraryPath) {
+      this.settings.currentLibraryPath = libraryPath;
+      useLocalStorage("libraryPath", libraryPath); // save to local storage
+    },
+    clearLibraryInformation() {
+      this.settings.currentLibraryPath = "";
+      localStorage.removeItem("libraryPath");
+      this.setViewMode("");
+    },
   },
   getters: {
     getActivePage() {
-      //console.log("from store:", this.activePage);
       return this.activePage;
     },
     getPageMeta() {
-      //console.log("arg from store:", this.activePage);
       const selectedMeta = this.pageMetadata[this.activePage] || {};
-      //console.log("selected meta:", selectedMeta);
       return selectedMeta;
+    },
+    getLibraryDirectory() {
+      return this.settings.currentLibraryPath;
     },
   },
 });

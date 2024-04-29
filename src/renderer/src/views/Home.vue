@@ -40,8 +40,6 @@ const folders = ref(null);
 const files = ref({});
 const selectedFolder = ref(null);
 
-console.log("check selected folder", selectedFolder);
-
 // load library UI from file on mount
 onMounted(async () => {
   try {

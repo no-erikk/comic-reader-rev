@@ -97,6 +97,15 @@ function writeDataToFile(data) {
   });
 }
 
+export function deleteLibraryFile() {
+  unlink(dbFilePath, (err) => {
+    if (err) {
+      console.error("error deleting file", err);
+      return;
+    }
+  });
+}
+
 // load directories from library.json
 export async function readLibraryFolders() {
   try {

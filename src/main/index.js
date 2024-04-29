@@ -6,6 +6,7 @@ import {
   readLibraryFiles,
   readLibraryFolders,
   selectDirectory,
+  deleteLibraryFile,
 } from "./helpers/database";
 
 function createWindow() {
@@ -77,10 +78,10 @@ app.on("window-all-closed", () => {
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 
-// Listen for the message from the renderer process to open file dialog and read directories
+// LISTENER open file dialog and read directories
 ipcMain.handle("selectDirectory", selectDirectory);
 
-// walk subfolders of main directory
+// LISTENER walk subfolders of main directory
 ipcMain.handle("readLibraryFolders", async () => {
   try {
     const folders = await readLibraryFolders();
@@ -91,7 +92,7 @@ ipcMain.handle("readLibraryFolders", async () => {
   }
 });
 
-// walk files in selected subfolder
+// LISTENER walk files in selected subfolder
 ipcMain.handle("readLibraryFiles", async (_, selectedFolderPath) => {
   try {
     const files = await readLibraryFiles(selectedFolderPath);
@@ -101,3 +102,6 @@ ipcMain.handle("readLibraryFiles", async (_, selectedFolderPath) => {
     return null;
   }
 });
+
+// LISTENER delete library.json
+ipcMain.handle("deleteLibraryFile", deleteLibraryFile);

@@ -9,6 +9,7 @@ const storageApi = {
   readLibraryFolders: () => ipcRenderer.invoke("readLibraryFolders"),
   readLibraryFiles: (selectedFolderPath) =>
     ipcRenderer.invoke("readLibraryFiles", selectedFolderPath),
+  deleteLibraryFile: () => ipcRenderer.invoke("deleteLibraryFile"),
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
