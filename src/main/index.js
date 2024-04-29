@@ -56,9 +56,6 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
-  ipcMain.on("ping", () => console.log("pong"));
-
   createWindow();
 
   app.on("activate", function () {
@@ -83,14 +80,7 @@ app.on("window-all-closed", () => {
 // Listen for the message from the renderer process to open file dialog and read directories
 ipcMain.handle("selectDirectory", selectDirectory);
 
-/* ipcMain.handle("readFolder", (event, folderPath) => {
-  try {
-    const folderData = readFolder(folderPath);
-    return folderData;
-  } catch (error) {
-    return [];
-  }
-}); */
+// walk subfolders of main directory
 ipcMain.handle("readLibraryFolders", async () => {
   try {
     const folders = await readLibraryFolders();
@@ -101,6 +91,7 @@ ipcMain.handle("readLibraryFolders", async () => {
   }
 });
 
+// walk files in selected subfolder
 ipcMain.handle("readLibraryFiles", async (_, selectedFolderPath) => {
   try {
     const files = await readLibraryFiles(selectedFolderPath);

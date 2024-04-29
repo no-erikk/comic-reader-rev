@@ -1,10 +1,14 @@
 <script setup>
-import { ref } from "vue";
+import { useStore } from "../stores/rendererStore";
 
-const filePath = ref(null);
+const store = useStore();
+const folderPath = store.getLibraryDirectory;
+
 const readDir = async () => {
   try {
-    filePath.value = await storageApi.selectDirectory();
+    const libPath = await storageApi.selectDirectory();
+    console.log("library path from main", libPath, typeof libPath);
+    store.setLibraryDirectory(libPath);
   } catch (error) {
     console.log(error);
   }
@@ -23,7 +27,7 @@ const readDir = async () => {
       >
         Choose file
       </button>
-      <h2 class="inline text-popGrey">Selected Folder: {{ filePath }}</h2>
+      <h2 class="inline text-popGrey">Selected Folder: {{ folderPath }}</h2>
     </div>
   </main>
 </template>

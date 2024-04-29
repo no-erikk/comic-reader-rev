@@ -2,6 +2,8 @@ import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 
 // Custom APIs for renderer
+
+// api for pinia store
 const storageApi = {
   selectDirectory: () => ipcRenderer.invoke("selectDirectory"),
   readLibraryFolders: () => ipcRenderer.invoke("readLibraryFolders"),

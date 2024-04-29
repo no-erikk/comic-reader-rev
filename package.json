@@ -36,6 +36,7 @@
     "autoprefixer": "^10.4.19",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
+    "electron-store": "^8.2.0",
     "electron-vite": "^2.0.0",
     "eslint": "^9.1.0",
     "eslint-config-prettier": "^9.1.0",

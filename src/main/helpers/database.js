@@ -1,10 +1,9 @@
-import { access, constants, promises, readFile, unlink, writeFile } from "fs";
+import { access, constants, promises, unlink, writeFile } from "fs";
 import path from "path";
 const readdrip = require("readdirp");
 import { app, dialog } from "electron";
 
 const dbFilePath = path.join(app.getAppPath(), "library.json");
-console.log("Data file path:", dbFilePath);
 
 // open dialog so user can choose folder
 export async function selectDirectory() {
@@ -19,9 +18,10 @@ export async function selectDirectory() {
     if (!result.canceled) {
       //selected dir paths
       const root = result.filePaths[0];
-      console.log("selected file paths", root);
+      console.log("selected file paths", root, typeof root);
 
       scanFolders(root);
+      return root;
     } else {
       // dialog canceled
       return;
@@ -31,7 +31,7 @@ export async function selectDirectory() {
   }
 }
 // walk through user selected directory and add subfolders and files to json file
-async function scanFolders(rootFolder) {
+function scanFolders(rootFolder) {
   const folders = [];
   const files = [];
   // options for readdirp
@@ -40,7 +40,7 @@ async function scanFolders(rootFolder) {
     fileFilter: ["*.cbz", "*.cbr", "*.pdf"],
   };
 
-  const stream = await readdrip(rootFolder, dirOptions);
+  const stream = readdrip(rootFolder, dirOptions);
   stream
     .on("data", (entry) => {
       console.log(entry.fullPath);
@@ -55,7 +55,6 @@ async function scanFolders(rootFolder) {
           // files
           name: entry.basename,
           path: entry.fullPath,
-          //folder: path.dirname(entry.fullPath),
           read: false,
           //new: true, // TODO
         });
@@ -98,26 +97,26 @@ function writeDataToFile(data) {
   });
 }
 
-// load directories from library.json on startup
+// load directories from library.json
 export async function readLibraryFolders() {
   try {
     const data = await promises.readFile(dbFilePath);
-    console.log("raw data", data);
+    //console.log("raw data", data);
     const { folders } = JSON.parse(data);
-    console.log("folder data:", folders);
+    //console.log("folder data:", folders);
 
     return folders;
   } catch (error) {
     console.error("Error reading folder data:", error);
   }
 }
-
+// load files from selected directory
 export async function readLibraryFiles(selectedFolderPath) {
   try {
-    console.log("target folder", selectedFolderPath);
+    //console.log("target folder", selectedFolderPath);
     const data = await promises.readFile(dbFilePath);
     const { files } = JSON.parse(data);
-    console.log("file data:", files);
+    //console.log("file data:", files);
 
     const filteredFiles = files.filter(
       (file) => path.dirname(file.path) === selectedFolderPath,
