@@ -17,6 +17,7 @@ export const useStore = defineStore({
         iconPath: "../assets/settings.svg", // todo
       },
     },
+    viewMode: "",
     settings: {
       databasePath: "src/db.json",
       currentLibraryPath: "", // todo
@@ -26,6 +27,9 @@ export const useStore = defineStore({
     setActivePage(page) {
       this.activePage = page;
       return this.activePage;
+    },
+    setViewMode(viewName) {
+      this.viewMode = viewName;
     },
   },
   getters: {
@@ -41,4 +45,3 @@ export const useStore = defineStore({
     },
   },
 });
-
