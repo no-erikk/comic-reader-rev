@@ -34,6 +34,7 @@ import { useStore } from "../stores/store";
 const store = useStore();
 
 // basic back button for library view
+// ライブラリビューの基本的な戻るボタン
 const back = () => {
   store.setViewMode("folders");
 };

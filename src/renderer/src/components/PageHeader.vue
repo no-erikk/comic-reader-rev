@@ -12,6 +12,7 @@ import { useStore } from "../stores/store";
 
 const store = useStore();
 // change page title when data is changed in store (via router)
+// storeのデータが変更されたらページタイトルを変更する（ルーターから）
 const pageMeta = computed(() => store.getPageMeta);
 </script>
 

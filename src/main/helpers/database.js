@@ -6,17 +6,21 @@ import { app, dialog } from "electron";
 const dbFilePath = path.join(app.getAppPath(), "library.json");
 
 // open dialog so user can choose folder
+// フォルダを選択するためのダイアログを開く
 export async function selectDirectory() {
   // options for file dialog
+  // ファイルダイアログのオプション
   const dialogOptions = {
     properties: ["openDirectory"], // allow only dirs to be chosen
   };
 
   try {
     // show file dialog
+    // ファイルダイアログを表示
     const result = await dialog.showOpenDialog(dialogOptions);
     if (!result.canceled) {
-      //selected dir paths
+      // selected dir paths
+      // 選択されたディレクトリのパス
       const root = result.filePaths[0];
       console.log("selected file paths", root, typeof root);
 
@@ -24,6 +28,7 @@ export async function selectDirectory() {
       return root;
     } else {
       // dialog canceled
+      // ダイアログをキャンセル
       return;
     }
   } catch (err) {
@@ -31,10 +36,12 @@ export async function selectDirectory() {
   }
 }
 // walk through user selected directory and add subfolders and files to json file
+// ユーザが選択したディレクトリをウォークスルーし、サブフォルダとファイルをjsonファイルに追加する
 function scanFolders(rootFolder) {
   const folders = [];
   const files = [];
   // options for readdirp
+  // readdirpのオプション
   const dirOptions = {
     type: "files_directories",
     fileFilter: ["*.cbz", "*.cbr", "*.pdf"],
@@ -46,6 +53,7 @@ function scanFolders(rootFolder) {
       console.log(entry.fullPath);
       if (entry.dirent.isDirectory()) {
         // directories
+        // ダイレクトリー
         folders.push({
           name: entry.basename,
           path: entry.fullPath,
@@ -53,6 +61,7 @@ function scanFolders(rootFolder) {
       } else {
         files.push({
           // files
+          // ファイル
           name: entry.basename,
           path: entry.fullPath,
           read: false,
@@ -62,20 +71,24 @@ function scanFolders(rootFolder) {
     })
     .on("end", () => {
       // check for current db file
+      // 現在のdbファイルを確認する
       access(dbFilePath, constants.F_OK, (err) => {
         if (!err) {
           // file exists, delete
+          // ファイルがある、消す
           unlink(dbFilePath, (err) => {
             if (err) {
               console.error("error deleting file", err);
               return;
             }
             // write new data to file
+            //　新しいデータをファイルに書き込む
             writeDataToFile({ folders, files });
             console.log("replaced old db file with new");
           });
         } else {
           // no file exists, make a new one
+          //　ファイルがない、新しいファイルを作成する
           writeDataToFile({ folders, files });
           console.log("created brand new db file");
         }
@@ -87,6 +100,7 @@ function scanFolders(rootFolder) {
 }
 
 // save to file
+//　ファイルに書き込む
 function writeDataToFile(data) {
   writeFile(dbFilePath, JSON.stringify(data), (err) => {
     if (err) {
@@ -107,6 +121,7 @@ export function deleteLibraryFile() {
 }
 
 // load directories from library.json
+//　library.jsonからディレクトリを読み込む
 export async function readLibraryFolders() {
   try {
     const data = await promises.readFile(dbFilePath);
@@ -120,6 +135,7 @@ export async function readLibraryFolders() {
   }
 }
 // load files from selected directory
+//　選択したディレクトリからファイルを読み込む
 export async function readLibraryFiles(selectedFolderPath) {
   try {
     //console.log("target folder", selectedFolderPath);

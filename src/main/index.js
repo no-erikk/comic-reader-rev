@@ -79,9 +79,11 @@ app.on("window-all-closed", () => {
 // code. You can also put them in separate files and require them here.
 
 // LISTENER open file dialog and read directories
+// LISTENER ファイルダイアログを開き、ディレクトリを読む
 ipcMain.handle("selectDirectory", selectDirectory);
 
 // LISTENER walk subfolders of main directory
+// LISTENER メインディレクトリのサブフォルダを歩く
 ipcMain.handle("readLibraryFolders", async () => {
   try {
     const folders = await readLibraryFolders();
@@ -93,6 +95,7 @@ ipcMain.handle("readLibraryFolders", async () => {
 });
 
 // LISTENER walk files in selected subfolder
+// LISTENER 選択したサブフォルダ内のファイルに歩く
 ipcMain.handle("readLibraryFiles", async (_, selectedFolderPath) => {
   try {
     const files = await readLibraryFiles(selectedFolderPath);
@@ -104,4 +107,5 @@ ipcMain.handle("readLibraryFiles", async (_, selectedFolderPath) => {
 });
 
 // LISTENER delete library.json
+// LISTENER library.jsonを削除する
 ipcMain.handle("deleteLibraryFile", deleteLibraryFile);

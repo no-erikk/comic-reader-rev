@@ -13,6 +13,7 @@ app.use(router);
 app.use(pinia);
 
 // load stored library data to store
+// ライブラリデータをストアにロード
 const store = useStore();
 store.loadLibraryData();
 
