@@ -1,6 +1,11 @@
 # comic-reader-rev
 
-An Electron application with Vue
+練習のためのコミックブック読むアプリです。
+スタック：
+Electron 28
+Vue 3
+Vite 2
+TailwindCSS
 
 ## Recommended IDE Setup
 
